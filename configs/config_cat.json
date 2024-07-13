@@ -20,10 +20,37 @@
             "Contract",
             "PaperlessBilling",
             "PaymentMethod"
+        ],
+        "binary_cols": [
+            "gender",
+            "Partner",
+            "Dependents",
+            "PhoneService",
+            "PaperlessBilling"
         ]
     },
 
     "model": {
-        "early_stopping_rounds": 20
+        "cat_features":[
+            "MultipleLines",
+            "InternetService",
+            "OnlineSecurity",
+            "OnlineBackup",
+            "DeviceProtection",
+            "TechSupport",
+            "StreamingTV",
+            "StreamingMovies",
+            "Contract",
+            "PaymentMethod"
+        ],
+        "early_stopping_rounds": 20,
+        "eval_metric": "AUC",
+
+        "subsample": 0.7,
+        "colsample_bylevel": 0.7,
+
+        "max_depth": 7,
+
+        "reg_lambda": 15
     }
 }

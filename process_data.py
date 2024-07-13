@@ -9,13 +9,16 @@ from feature_engine.encoding import OneHotEncoder
 
 class ProcessData:
     def __init__(self, model_type: str, data_name: str, out_dir: str,
-                 test_size: float, target: str, cat_cols: list):
+                 test_size: float, target: str,
+                 cat_cols: list, binary_cols: list
+                 ):
 
         self.model_type = model_type
         self.df = pd.read_csv(data_name)
         self.test_size = test_size
         self.target = target
         self.cat_cols = cat_cols
+        self.binary_cols = binary_cols
         self.out_dir = out_dir
 
     def common_step(self):
@@ -53,10 +56,10 @@ class ProcessData:
         self.y_valid = valid[target]
         self.y_test = test[target]
 
-    def lgb_data_processor(self, cat_cols):
+    def lgb_data_processor(self):
 
         encoder = OneHotEncoder(
-            variables=cat_cols,
+            variables=self.cat_cols,
             drop_last_binary=True
         )
 
@@ -65,7 +68,15 @@ class ProcessData:
         self.X_test = encoder.transform(self.X_test)
 
     def cat_data_processor(self):
-        pass
+
+        encoder = OneHotEncoder(
+            variables=self.binary_cols,
+            drop_last_binary=True
+        )
+
+        self.X_train = encoder.fit_transform(self.X_train)
+        self.X_valid = encoder.transform(self.X_valid)
+        self.X_test = encoder.transform(self.X_test)
 
     def save_data(self, out_dir):
 
@@ -87,9 +98,7 @@ class ProcessData:
             test_size=self.test_size,
             target=self.target
         )
-        self.__getattribute__(f'{self.model_type}_data_processor')(
-            cat_cols=self.cat_cols
-        )
+        self.__getattribute__(f'{self.model_type}_data_processor')()
         self.save_data(out_dir=self.out_dir)
 
 
@@ -104,7 +113,8 @@ if __name__ == '__main__':
             out_dir=config["out_dir"],
             test_size=config["test_size"],
             target=config["target"],
-            cat_cols=config["cat_cols"]
+            cat_cols=config["cat_cols"],
+            binary_cols=config["binary_cols"]
         )
 
     data_pipeline.run_pipeline()

@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+from datetime import datetime
 
 import numpy as np
 import pandas as pd
@@ -25,14 +26,20 @@ class TrainModel:
         self.model_type = model_type
         self.data_dir = data_dir
         self.hyperparams = hyperparams
-        datasetsets = (
-            'X_train', 'X_valid', 'X_test',
-            'y_train', 'y_valid', 'y_test'
-        )
-        for d in datasetsets:
+
+        Xs = ('X_train', 'X_valid', 'X_test')
+        ys = ('y_train', 'y_valid', 'y_test')
+
+        for x in Xs:
             self.__setattr__(
-                d,
-                pd.read_csv(os.path.join(self.data_dir, f'{d}.csv'))
+                x,
+                pd.read_csv(os.path.join(self.data_dir, f'{x}.csv'))
+            )
+
+        for y in ys:
+            self.__setattr__(
+                y,
+                pd.read_csv(os.path.join(self.data_dir, f'{y}.csv')).iloc[:, 0]
             )
 
     def train_lgb(self):
@@ -43,10 +50,36 @@ class TrainModel:
             eval_set=(self.X_valid, self.y_valid)
         )
 
+        model_name = f'model_lgb_{datetime.now().strftime("%d_%m_%Y_%H_%M_%S")}.txt'  # noqa: E501
+        model.booster_.save_model(os.path.join('models', model_name))
+
+        self.model_name = model_name
+        self.model = model
+
+        self.pred_test = model.predict_proba(self.X_test)[:, -1]
+
     def train_cat(self):
 
-        model = cat.CatBoostClassifier(**self.hyperparams)
-        model.fit()
+        train_pool = cat.Pool(
+            self.X_train, self.y_train,
+            cat_features=hyperparams["cat_features"]
+        )
+        val_pool = cat.Pool(
+            self.X_valid, self.y_valid,
+            cat_features=hyperparams["cat_features"])
+
+        del hyperparams["cat_features"]
+
+        model = cat.CatBoostClassifier(**hyperparams)
+        model.fit(train_pool, eval_set=val_pool)
+
+        model_name = f'model_cat_{datetime.now().strftime("%d_%m_%Y_%H_%M_%S")}'  # noqa: E501
+        model.save_model(os.path.join('models', model_name))
+
+        self.model_name = model_name
+        self.model = model
+
+        self.pred_test = model.predict_proba(self.X_test)[:, -1]
 
     def evaluate_model(
             self,
@@ -62,10 +95,8 @@ class TrainModel:
         second plot is an roc curve
         third plot is a confusion matrix a
         fourth plot is a classification report
-        the function also calculates KS statistic, AUC and accuracy
-
-        then the function saves this plot and also return model metrics:
-          KS, Accuracy, AUC
+        saves the plot in figures directory
+        returns model metrics on the test set: KS, Accuracy, AUC
         """
 
         title_font_size = 14
@@ -153,14 +184,21 @@ class TrainModel:
         ax[0][1].spines[['left', 'right', 'top']].set_visible(False)
 
         plt.tight_layout()
-        plt.savefig('figures/plot.png', dpi=300)
+        plt.savefig(
+            os.path.join('figures', f'{self.model_name}.png'),
+            dpi=300, bbox_inches='tight'
+        )
 
         return {'KS': ks, 'Accuracy': acc, 'AUC': auc}
 
     def run_pipeline(self):
 
-        self.__getattribute__(f'train_{self.model_type}')
-        self.evaluate_model()
+        self.__getattribute__(f'train_{self.model_type}')()
+        self.evaluate_model(
+            y=self.y_test,
+            pred=self.pred_test,
+            title='Test Set Metrics'
+        )
 
 
 if __name__ == '__main__':

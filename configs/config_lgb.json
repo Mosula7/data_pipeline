@@ -20,7 +20,14 @@
             "Contract",
             "PaperlessBilling",
             "PaymentMethod"
-        ]
+        ],
+        "binary_cols": [
+                "gender",
+                "Partner",
+                "Dependents",
+                "PhoneService",
+                "PaperlessBilling"
+            ]
     },
 
     "model": {
