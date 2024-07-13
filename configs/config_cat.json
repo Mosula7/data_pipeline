@@ -1,0 +1,29 @@
+{
+    "data": {
+        "data_name": "data.csv", 
+        "out_dir": "data", 
+        "test_size": 0.15, 
+        "target": "Churn", 
+        "cat_cols": [
+            "gender",
+            "Partner",
+            "Dependents",
+            "PhoneService",
+            "MultipleLines",
+            "InternetService",
+            "OnlineSecurity",
+            "OnlineBackup",
+            "DeviceProtection",
+            "TechSupport",
+            "StreamingTV",
+            "StreamingMovies",
+            "Contract",
+            "PaperlessBilling",
+            "PaymentMethod"
+        ]
+    },
+
+    "model": {
+        "early_stopping_rounds": 20
+    }
+}
