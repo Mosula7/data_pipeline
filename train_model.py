@@ -202,6 +202,7 @@ class TrainModel:
             title='Test Set Metrics'
         )
 
+
 if __name__ == '__main__':
     model_type = sys.argv[1]
 
