@@ -18,7 +18,8 @@ class ProcessData:
         self.cat_cols = cat_cols
         self.out_dir = out_dir
 
-    def clean_data(self):
+    def common_step(self):
+
         self.df = self.df.drop(columns=['customerID'])
         self.df['MonthlyCharges'] = self.df['MonthlyCharges'].astype('float64')
         self.df['TotalCharges'] = self.df['TotalCharges'].replace(' ', '0')
@@ -53,6 +54,7 @@ class ProcessData:
         self.y_test = test[target]
 
     def lgb_data_processor(self, cat_cols):
+
         encoder = OneHotEncoder(
             variables=cat_cols,
             drop_last_binary=True
@@ -66,6 +68,7 @@ class ProcessData:
         pass
 
     def save_data(self, out_dir):
+
         datasets = (
             'X_train', 'X_valid', 'X_test',
             'y_train', 'y_valid', 'y_test'
@@ -77,7 +80,8 @@ class ProcessData:
             )
 
     def run_pipeline(self):
-        self.clean_data()
+
+        self.common_step()
         self.split_data(
             df=self.df,
             test_size=self.test_size,

@@ -1,3 +1,6 @@
 /data.csv
-/testing.ipynb
 /data/*
+/models/*
+/figures/*.png
+
+/testing.ipynb
