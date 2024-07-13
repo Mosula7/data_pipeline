@@ -1,7 +1,7 @@
 schema: '2.0'
 stages:
   process_data:
-    cmd: python3 process_data.py lgb
+    cmd: python3 process_data.py cat
     deps:
     - path: data/data.csv
       hash: md5
@@ -14,16 +14,16 @@ stages:
     outs:
     - path: data/X_test.csv
       hash: md5
-      md5: 175db9ea0e6b388a13b0f848bcc4f8d1
-      size: 95379
+      md5: bbcd8d5b20c494dba20fc317c6d1377e
+      size: 119946
     - path: data/X_train.csv
       hash: md5
-      md5: 4aee9e557cc019d7c7bd1af6e7a792fb
-      size: 441085
+      md5: 4e0e7e164f4198041dae963ce8eb87a5
+      size: 559682
     - path: data/X_valid.csv
       hash: md5
-      md5: 48e120a71e64dc60ffd7f5470a15eb5b
-      size: 95363
+      md5: 5095e80e5a054ea5d7bd7f7ff825e851
+      size: 120020
     - path: data/y_test.csv
       hash: md5
       md5: 73cb6cc45e614c60713e95bafc667945
@@ -37,20 +37,20 @@ stages:
       md5: 7f21d726f5d2ff79f1f694a7c4ed9bae
       size: 2120
   train_model:
-    cmd: python3 train_model.py lgb
+    cmd: python3 train_model.py cat
     deps:
     - path: data/X_test.csv
       hash: md5
-      md5: 175db9ea0e6b388a13b0f848bcc4f8d1
-      size: 95379
+      md5: bbcd8d5b20c494dba20fc317c6d1377e
+      size: 119946
     - path: data/X_train.csv
       hash: md5
-      md5: 4aee9e557cc019d7c7bd1af6e7a792fb
-      size: 441085
+      md5: 4e0e7e164f4198041dae963ce8eb87a5
+      size: 559682
     - path: data/X_valid.csv
       hash: md5
-      md5: 48e120a71e64dc60ffd7f5470a15eb5b
-      size: 95363
+      md5: 5095e80e5a054ea5d7bd7f7ff825e851
+      size: 120020
     - path: data/y_test.csv
       hash: md5
       md5: 73cb6cc45e614c60713e95bafc667945
@@ -70,5 +70,5 @@ stages:
     outs:
     - path: metrics/metrics.json
       hash: md5
-      md5: 0b74e0e0bd1a8d6946a6a4d8b4dd1c1c
+      md5: 666ba2bd35e7ee4668ce94b1dfe50864
       size: 85
