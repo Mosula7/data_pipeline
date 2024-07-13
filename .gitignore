@@ -1,6 +1,5 @@
 /data/*.csv
 /models/*
-/figures/*
 
 /testing.ipynb
 /catboost_info

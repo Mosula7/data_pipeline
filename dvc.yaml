@@ -22,6 +22,8 @@ stages:
     - data/y_train.csv
     - data/y_valid.csv
     - data/y_test.csv
+    outs:
+    - figures/metrics.png
     metrics:
     - metrics/metrics.json:
         cache: false

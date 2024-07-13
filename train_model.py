@@ -185,7 +185,7 @@ class TrainModel:
 
         plt.tight_layout()
         plt.savefig(
-            os.path.join('figures', f'{self.model_name}.png'),
+            os.path.join('figures', 'metrics.png'),
             dpi=300, bbox_inches='tight'
         )
 
