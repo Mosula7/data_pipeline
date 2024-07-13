@@ -14,7 +14,7 @@ class ProcessData:
                  ):
 
         self.model_type = model_type
-        self.df = pd.read_csv(data_name)
+        self.df = pd.read_csv(os.path.join('data', data_name))
         self.test_size = test_size
         self.target = target
         self.cat_cols = cat_cols

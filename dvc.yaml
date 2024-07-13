@@ -1,0 +1,32 @@
+stages:
+  process_data:
+    cmd: python3 process_data.py ${model_type}
+    deps:
+    - process_data.py
+    - data/data.csv
+    outs:
+    - data/X_train.csv
+    - data/X_valid.csv
+    - data/X_test.csv
+    - data/y_train.csv
+    - data/y_valid.csv
+    - data/y_test.csv
+
+  train_model:
+    cmd: python3 train_model.py ${model_type}
+    deps:
+    - train_model.py
+    - data/X_train.csv
+    - data/X_valid.csv
+    - data/X_test.csv
+    - data/y_train.csv
+    - data/y_valid.csv
+    - data/y_test.csv
+    outs:
+    - models
+    - figures
+    metrics:
+    - metrics/metrics.json:
+        cache: false
+
+

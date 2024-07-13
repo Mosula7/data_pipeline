@@ -189,7 +189,9 @@ class TrainModel:
             dpi=300, bbox_inches='tight'
         )
 
-        return {'KS': ks, 'Accuracy': acc, 'AUC': auc}
+        metrics = {'KS': ks, 'Accuracy': acc, 'AUC': auc}
+        with open('metrics/metrics.json', 'w') as fp:
+            json.dump(metrics, fp)
 
     def run_pipeline(self):
 
