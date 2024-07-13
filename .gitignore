@@ -1,4 +1,5 @@
-/data/*.csv
+/data/X_*.csv
+/data/y_*.csv
 /models/*
 
 /testing.ipynb
