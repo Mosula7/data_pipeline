@@ -13,6 +13,8 @@ jobs:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           pip install -r requirements.txt
+          
+          dvc pull data/data.csv
           dvc repro 
 
           git fetch --prune
