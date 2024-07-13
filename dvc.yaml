@@ -23,8 +23,8 @@ stages:
     - data/y_valid.csv
     - data/y_test.csv
     outs:
-    - models
-    - figures
+    - models/
+    - figures/
     metrics:
     - metrics/metrics.json:
         cache: false
