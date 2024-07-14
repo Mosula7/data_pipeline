@@ -1,0 +1,10 @@
+services:
+  model_optimization:
+    build: model_optimization
+    volumes:
+      - ./data:/app/data  
+      - ./models:/app/models
+      - ./figures:/app/figures
+      - ./metrics:/app/metrics
+      -
+    tty: true

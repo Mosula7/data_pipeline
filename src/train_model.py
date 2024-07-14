@@ -50,8 +50,8 @@ class TrainModel:
             eval_set=(self.X_valid, self.y_valid)
         )
 
-        model_name = f'model_lgb_{datetime.now().strftime("%d_%m_%Y_%H_%M_%S")}.txt'  # noqa: E501
-        model.booster_.save_model(os.path.join('models', model_name))
+        model_name = f'model_lgb_{datetime.now().strftime("%d_%m_%Y_%H_%M_%S")}'  # noqa: E501
+        model.booster_.save_model(os.path.join('models', f'{model_name}.txt'))
 
         self.model_name = model_name
         self.model = model
@@ -185,12 +185,12 @@ class TrainModel:
 
         plt.tight_layout()
         plt.savefig(
-            os.path.join('figures', 'metrics.png'),
+            os.path.join('figures', f'{self.model_name}.png'),
             dpi=300, bbox_inches='tight'
         )
 
         metrics = {'KS': ks, 'Accuracy': acc, 'AUC': auc}
-        with open('metrics/metrics.json', 'w') as fp:
+        with open(os.path.join('metrics', 'metrics.json'), 'w') as fp:
             json.dump(metrics, fp)
 
     def run_pipeline(self):

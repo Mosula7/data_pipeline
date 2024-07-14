@@ -14,7 +14,7 @@ class ProcessData:
                  ):
 
         self.model_type = model_type
-        self.df = pd.read_csv(os.path.join('data', data_name))
+        self.df = pd.read_csv(os.path.join('..', 'data', data_name))
         self.test_size = test_size
         self.target = target
         self.cat_cols = cat_cols
@@ -86,7 +86,7 @@ class ProcessData:
         )
         for d in datasets:
             self.__getattribute__(d).to_csv(
-                os.path.join(out_dir, f'{d}.csv'),
+                os.path.join('..', out_dir, f'{d}.csv'),
                 index=False
             )
 
