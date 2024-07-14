@@ -3,3 +3,4 @@
     autostage = true
 ['remote "myremote"']
     url = gdrive://1HXtcsTTmXTnWCvHm9mgdv6HyzBFMZm0c
+    gdrive_use_service_account = true

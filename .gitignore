@@ -1,5 +1,6 @@
 /data/*
 /models/*
+/dvc-remote.json
 
 /testing.ipynb
 /catboost_info
