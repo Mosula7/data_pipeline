@@ -204,7 +204,10 @@ class TrainModel:
 
 
 if __name__ == '__main__':
-    model_type = sys.argv[1]
+    try:
+        model_type = sys.argv[1]
+    except IndexError:
+        raise ProcessLookupError('Specify model type: ("lgb", "cat")')
 
     with open(os.path.join('configs', f'config_{model_type}.json')) as file:
         data_dir = json.load(file)['data']['out_dir']
