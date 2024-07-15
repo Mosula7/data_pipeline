@@ -8,7 +8,7 @@ python src/process_data.py "lgb"
 python src/train_model.py "lgb"
 ```
 ## DVC
-* For data storage I'm using a google drive which is connected to a service account. You will need a seperate dvc-remote.json file for the service account credentials which I will send seperatly.
+* For data storage I'm using a google drive which is connected to a service account. You will need a seperate dvc-remote.json file for the service account credentials which I will send seperatly. 
 * Before running the pipeline you can get the main dataset wit:
 ```
 dvc pull data/data.csv
@@ -19,7 +19,7 @@ Run the following command to start the docker container:
 ```
 docker compose up -d
 ```
-After you will need to initialize git and also add the dvc-remote.json to dvc file paths:
+After the container is running inside the container you will need to initialize git and also add the dvc-remote.json to dvc file paths:
 ```
 git init
 dvc remote modify myremote --local gdrive_service_account_json_file_path dvc-remote.json
