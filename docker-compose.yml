@@ -1,10 +1,19 @@
 services:
-  model_optimization:
-    build: model_optimization
+  dvc_pipeline:
+    build: .
     volumes:
+      # code
+      - ./src:/app/src
+      # inp dirs
       - ./data:/app/data  
+      - ./configs:/app/configs
+      # out dirs
       - ./models:/app/models
       - ./figures:/app/figures
       - ./metrics:/app/metrics
-      -
+      # dvc files
+      - ./.dvc/config:/app/.dvc/config
+      - ./data.csv.dvc:/app/data.csv.dvc
+      - ./dvc.yaml:/app/dvc.yaml
+      - ./params.yaml:/app/params.yaml
     tty: true
