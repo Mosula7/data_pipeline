@@ -24,4 +24,4 @@ After the container is running inside the container you will need to initialize 
 git init
 dvc remote modify myremote --local gdrive_service_account_json_file_path dvc-remote.json
 ```
-After this is set up you can run dvc pull **data/data.csv** and **dvc repro**
+After this is set up you can run **dvc pull data/data.csv** and **dvc repro**
